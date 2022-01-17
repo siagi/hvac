@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const RaportSchema = new mongoose.Schema(
     {
-        customer_id:{type: mongoose.Types.ObjectId},
+        customer_id:{type: mongoose.Types.ObjectId,required:true},
         cleaning_the_heat_exchanger_of_the_indoor_unit:{type:Boolean},
         cleaning_the_heat_exchanger_of_the_outdoor_unit:{type:Boolean},
         recharging_the_refrigerant:{type:Boolean},
