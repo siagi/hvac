@@ -2,10 +2,10 @@ const router = require('express').Router();
 const {verifyToken} = require('../middleware/verifyToken');
 const Task = require('../models/Task');
 
-router.get('/allfororder/',verifyToken,(req,res)=>{
+router.get('/allfororder/',verifyToken, async (req,res)=>{
     try {
         const order = req.body.order
-        const tasks = Task.find({order_id:order.order_id});
+        const tasks = await Task.find({order_id:order.order_id});
         res.status(200).json(tasks);
 
     } catch (error) {
@@ -14,7 +14,7 @@ router.get('/allfororder/',verifyToken,(req,res)=>{
     }
 })
 
-router.post('/add',verifyToken,(req,res)=>{
+router.post('/add',verifyToken,async (req,res)=>{
     
     const task = new Task({
         customer_id:req.body.customer_id,
@@ -33,7 +33,7 @@ router.post('/add',verifyToken,(req,res)=>{
     }
 })
 
-router.put('/edit/:id',verifyToken,(req,res)=>{
+router.put('/edit/:id',verifyToken,async (req,res)=>{
     try {
         const task = await Task.findOneAndUpdate(req.params.id,
              {
@@ -48,7 +48,7 @@ router.put('/edit/:id',verifyToken,(req,res)=>{
     }
 })
 
-router.delete('/delete/:id',verifyToken,(req,res)=>{
+router.delete('/delete/:id',verifyToken,async (req,res)=>{
     try {
         const task = await Task.findOneAndDelete(req.params.id);
             res.status(200).json(task);
