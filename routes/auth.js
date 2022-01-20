@@ -3,6 +3,7 @@ const User = require('../models/User');
 const CryptoJS = require('crypto-js');
 const jwt = require('jsonwebtoken');
 
+
 router.post("/register",async (req,res)=>{
 
     const newUser = new User({
@@ -41,7 +42,7 @@ router.post('/login',async(req,res)=>{
                 },process.env.JWT_SECRET,
                 {expiresIn:'10d'})
                 const {password, ...others} = user._doc
-                res.status(201).json({...others,accessToken})}
+                res.status(201).json({...others}).cookie()}
             }
            
         
