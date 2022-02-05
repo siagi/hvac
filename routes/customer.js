@@ -29,6 +29,8 @@ router.get('/all',verifyToken, async(req,res)=>{
 
 router.post('/add',verifyToken,async (req,res)=>{
 
+    console.log('wywolano')
+
     const newCustomer = new Customer({
         name:req.body.name,
         nip:req.body.nip,

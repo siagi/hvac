@@ -4,8 +4,13 @@ const UserSchema = new mongoose.Schema(
     {
         username:{type:String,required:true,unique:true},
         password:{type:String,required:true},
+        name:{type:String,required:true},
+        surname:{type:String,required:true},
         email:{type:String,required:true,unique:true},
-        isAdmin:{type:Boolean}, 
+        phone:{type:String,unique:true},
+        avatarId:{type:String},
+        avatarLink:{type:String}
+
     },
     {timestamps:true}
 )
