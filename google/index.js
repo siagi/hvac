@@ -4,6 +4,13 @@ const readline = require('readline');
 const {google, drive_v3, GoogleApis} = require('googleapis');
 const { drive } = require('googleapis/build/src/apis/drive');
 
+async function getEmails (){
+    const KEYFILEPATH = "C:\\Users\\micha\\Downloads\\hvacservice-339709-766408d1dd45.json";
+    const SCOPES = ['https://www.googleapis.com/auth/drive'];
+    
+    console.log('test gmail')
+}
+
 
 
 async function createAndUploadFile(file,cb){
@@ -101,6 +108,6 @@ function check(file){
 //     }
 // }
 
-module.exports = {createAndUploadFile,check}
+module.exports = {createAndUploadFile,getEmails}
 
 // createAndUploadFile().catch(console.error);
