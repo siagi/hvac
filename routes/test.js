@@ -44,7 +44,7 @@ router.get('/test', async (req,res) =>{
             })
             const savedOrder = await newOrder.save();
             console.log(savedOrder);
-            // sendGmailEmail(from)
+            sendGmailEmail(from)
             
         }
         await mongoose.disconnect();
