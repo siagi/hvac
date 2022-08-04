@@ -50,11 +50,12 @@ router.post('/test', async (req,res) =>{
             })
             const savedOrder = await newOrder.save();
             console.log(savedOrder);
+            sendGmailEmail(from)
             
         }
+        await mongoose.disconnect();
         
         // emailsAccounts.forEach((item)=>{
-        //     sendGmailEmail(item)
         // })
     }
     getLatestEmails(addEmail, checkTheEmail);
