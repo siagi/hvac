@@ -98,20 +98,21 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                                 subject:subject.value,
                                 text:text
                             })
-                            console.log('from',from)
+                            // console.log('from',from)
+                            console.log('oAuth',auth);
                             // sendGmailEmail(from.value);
                         });
                         // console.log(res.data.messages[0].labelIds.includes('UNREAD'))
                         // console.log('subject',subject.value);
                         // console.log('text',res.data.messages[0].snippet);
                        
-                        gmail.users.messages.modify({
-                                userId:'me',
-                                id:messages[i].id,
-                                requestBody:{
-                                    removeLabelIds:['UNREAD']
-                                }
-                        })
+                        // gmail.users.messages.modify({
+                        //         userId:'me',
+                        //         id:messages[i].id,
+                        //         requestBody:{
+                        //             removeLabelIds:['UNREAD']
+                        //         }
+                        // })
                     }
                     if(i === messages.length-1){
                         checkTheEmail()
