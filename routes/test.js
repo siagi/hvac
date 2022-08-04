@@ -25,10 +25,10 @@ router.post('/test', async (req,res) =>{
     const checkTheEmail = async () => {
         console.log(emails)
         const emailsAccounts = []
-        await mongoose.connect(process.env.MONGO_URL)
-        .then(()=>console.log("DB connection Successfull"))
-        .catch((error)=>console.log('MONGO ERROR',error));
         for(let i=0; i<emails.length; i++){
+            await mongoose.connect(process.env.MONGO_URL)
+            .then(()=>console.log("DB connection Successfull"))
+            .catch((error)=>console.log('MONGO ERROR',error));
             console.log('here1');
             const {from, subject, text} = emails[i];
             emailsAccounts.push(from);
@@ -50,9 +50,9 @@ router.post('/test', async (req,res) =>{
             console.log(savedOrder);
             sendGmailEmail(from)
             
+            await mongoose.disconnect();
         }
         console.log('PO DODANIU DO DB ? ')
-        // await mongoose.disconnect();
         
         // emailsAccounts.forEach((item)=>{
         // })
