@@ -92,9 +92,9 @@ async function sendGmailEmail(emailAddress, orderID) {
             to: emailAddress,
             subject:`Nowe zamówienie nr ${orderID}`,
             text:'Hello from gmail email using API',
-            html: `<div style="display: flex; flex-direction:column; justify-items: center; align-items: center; gap: 5px;">
-            <img src="https://drive.google.com/file/d/1ugkBX5yTVIFaHDENVZoc8hFgMRdfqWql/view" width="200px" style="border-radius: 20px;"></img>
-            <div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; font-size: larger;">Dziękujemy za złożenie zamówienia w firmie MC2 Serwis.</div>
+            html: `<div style="display: flex; flex-direction:column; justify-items: center; align-items: center; gap: 5px;">\n
+            <img src="https://drive.google.com/file/d/1ugkBX5yTVIFaHDENVZoc8hFgMRdfqWql/view" width="200px" style="border-radius: 20px;"></img>\n
+            <div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; font-size: larger;">Dziękujemy za złożenie zamówienia w firmie MC2 Serwis.</div>\m
             <div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; font-size: large;">Twój numer zamówienia to :${orderID} </div>\n
             <div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size:medium; font-weight: bold;"> Bardzo prosimy o przejście do strony z formularzem aby uzupełnić dane do zgłoszenia oraz zaakepctować regulamin</div>\n
             <button style="margin-top: 20px;background-color:#004377; padding: 10px; color: white; border: 0; border-radius: 5px;"> Przejdz do formularza</button></div>`
