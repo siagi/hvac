@@ -102,30 +102,30 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                             // console.log('AUTH',auth);
                             // console.log('CLIENT ID', auth._clientId)
                             // console.log('CLIENT SECRET', auth._clientSecret)
-                            const accessToken = await auth.getAccessToken();
-                            // console.log(accessToken.token)
-                            // const client_id = auth._client_id
-                            const transport = nodemailer.createTransport({
-                                service:'gmail',
-                                auth:{
-                                  type:'OAuth2',
-                                  user:'zamowserwis24@gmail.com',
-                                  clientId:auth._clientId,
-                                  clientSecret:auth._clientSecret,
-                                  refreshToken:auth.credentials.refresh_token,
-                                  accessToken:auth.credentials.access_token,
-                                },
-                              })
-                              console.log(transport)
-                              const mailOptions = {
-                                from:'ZamowSerwis24 <zamowserwis24@gmail.om>',
-                                to: from.value,
-                                subject:'New zamowserwis24',
-                                text:'Hello from gmail email using API',
-                                html: '<h1>Hello from gmail email using API</h1>'
-                              } 
-                              console.log(mailOptions)
-                              transport.sendMail(mailOptions)
+                            // const accessToken = await auth.getAccessToken();
+                            // // console.log(accessToken.token)
+                            // // const client_id = auth._client_id
+                            // const transport = nodemailer.createTransport({
+                            //     service:'gmail',
+                            //     auth:{
+                            //       type:'OAuth2',
+                            //       user:'zamowserwis24@gmail.com',
+                            //       clientId:auth._clientId,
+                            //       clientSecret:auth._clientSecret,
+                            //       refreshToken:auth.credentials.refresh_token,
+                            //       accessToken:auth.credentials.access_token,
+                            //     },
+                            //   })
+                            //   console.log(transport)
+                            //   const mailOptions = {
+                            //     from:'ZamowSerwis24 <zamowserwis24@gmail.om>',
+                            //     to: from.value,
+                            //     subject:'New zamowserwis24',
+                            //     text:'Hello from gmail email using API',
+                            //     html: '<h1>Hello from gmail email using API</h1>'
+                            //   } 
+                            //   console.log(mailOptions)
+                            //   transport.sendMail(mailOptions)
                             // sendGmailEmail(from.value);
                         });
                         // console.log(res.data.messages[0].labelIds.includes('UNREAD'))
