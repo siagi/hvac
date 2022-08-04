@@ -22,7 +22,6 @@ router.post('/test', async (req,res) =>{
         //    console.log('adding...')
         // }
     const emails = []
-    getLatestEmails(emails, checkTheEmail);
     const checkTheEmail = async () => {
         console.log(emails)
         const emailsAccounts = []
@@ -62,6 +61,8 @@ router.post('/test', async (req,res) =>{
         // })
         res.status(200).json({mail:'confirmed'});
     }
+
+    getLatestEmails(emails, checkTheEmail);
     // console.log('???',getLatestEmails(addEmail, checkTheEmail))
     //     console.log(emails)
     // }, 5000)
