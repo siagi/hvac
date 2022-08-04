@@ -38,6 +38,7 @@ router.post('/test', async (req,res) =>{
                 const newCustomer = new Customer({
                     email:from,
                     name:from,
+                    nip:Date.now()
                 })
                 customer = await newCustomer.save();
                 console.log(customer)
