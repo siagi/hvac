@@ -99,7 +99,7 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                                 text:text
                             })
                             console.log('from',from)
-                            sendGmailEmail(from.value);
+                            // sendGmailEmail(from.value);
                         });
                         // console.log(res.data.messages[0].labelIds.includes('UNREAD'))
                         // console.log('subject',subject.value);
