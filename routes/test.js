@@ -51,7 +51,7 @@ router.post('/test', async (req,res) =>{
             sendGmailEmail(from)
             
         }
-        await mongoose.disconnect();
+        // await mongoose.disconnect();
         
         // emailsAccounts.forEach((item)=>{
         // })
