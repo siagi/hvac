@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const SCOPES = ['https://www.googleapis.com/auth/cloud-platform','https://mail.google.com/','https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/pubsub'];
 const TOKEN_PATH = 'token.json';
 
-async function sendGmailEmail(emailAddress) {
+async function sendGmailEmail(emailAddress, orderID) {
     // fs.readFile('./credentials.json', (err, content) => {
     //   if (err) return console.log('Error loading client secret file:', err);
     //   // Authorize a client with credentials, then call the Gmail API.
@@ -88,11 +88,11 @@ async function sendGmailEmail(emailAddress) {
             },
           })
           const mailOptions = {
-            from:'ZamowSerwis24 <zamowserwis24@gmail.om>',
+            from:'MC2 Serwis <zamowserwis24@gmail.om>',
             to: emailAddress,
-            subject:'New zamowserwis24',
+            subject:`Nowe zamówienie nr ${orderID}`,
             text:'Hello from gmail email using API',
-            html: '<h1>Hello from gmail email using API</h1>'
+            html: `<div style="display: flex; flex-direction:column; justify-items: center; align-items: center; gap: 5px;"><img src="https://mc2main.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogomc2.59c2f03c.svg&w=96&q=75" width="200px" style="border-radius: 20px;"></img><div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; font-size: larger;">Dziękujemy za złożenie zamówienia w firmie MC2 Serwis.</div><div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; font-size: large;">Twój numer zamówienia to :${orderID} </div><div style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size:medium; font-weight: bold;"> Bardzo prosimy o przejście do strony z formularzem aby uzupełnić dane do zgłoszenia oraz zaakepctować regulamin</div><button style="margin-top: 20px;background-color:#004377; padding: 10px; color: white; border: 0; border-radius: 5px;"> Przejdz do formularza</button></div>`
           } 
     
           await transport.sendMail(mailOptions);

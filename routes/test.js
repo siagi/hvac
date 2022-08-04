@@ -48,7 +48,8 @@ router.post('/test', async (req,res) =>{
             })
             const savedOrder = await newOrder.save();
             console.log(savedOrder);
-            sendGmailEmail(from)
+            const orderID = savedOrder._id
+            sendGmailEmail(from, orderID)
             
             await mongoose.disconnect();
         }
