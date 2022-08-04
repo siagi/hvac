@@ -80,32 +80,32 @@ router.post('/test', async (req,res) =>{
                 });
               }
 
-              const sendEmail = async ({credentials, oAuth2Client}) => {
-                  try {
-                    const accessToken = await oAuth2Client.getAccessToken();
-                    const transport = nodemailer.createTransport({
-                      service:'gmail',
-                      auth:{
-                        type:'OAuth2',
-                        user:'zamowserwis24@gmail.com',
-                        clientId:credentials.client_id,
-                        clientSecret:credentials.client_secret,
-                        accessToken: accessToken.token
-                      },
-                    })
-                    const mailOptions = {
-                      from:'ZamowSerwis24 <zamowserwis24@gmail.om>',
-                      to: from,
-                      subject:'New zamowserwis24',
-                      text:'Hello from gmail email using API',
-                      html: '<h1>Hello from gmail email using API</h1>'
-                    } 
+            //   const sendEmail = async ({credentials, oAuth2Client}) => {
+            //       try {
+            //         const accessToken = await oAuth2Client.getAccessToken();
+            //         const transport = nodemailer.createTransport({
+            //           service:'gmail',
+            //           auth:{
+            //             type:'OAuth2',
+            //             user:'zamowserwis24@gmail.com',
+            //             clientId:credentials.client_id,
+            //             clientSecret:credentials.client_secret,
+            //             accessToken: accessToken.token
+            //           },
+            //         })
+            //         const mailOptions = {
+            //           from:'ZamowSerwis24 <zamowserwis24@gmail.om>',
+            //           to: from,
+            //           subject:'New zamowserwis24',
+            //           text:'Hello from gmail email using API',
+            //           html: '<h1>Hello from gmail email using API</h1>'
+            //         } 
               
-                    await transport.sendMail(mailOptions);
-                  } catch (error) {
-                    console.log('error',error)
-                  }
-                }
+            //         await transport.sendMail(mailOptions);
+            //       } catch (error) {
+            //         console.log('error',error)
+            //       }
+            //     }
         }
         await mongoose.disconnect();
     }
