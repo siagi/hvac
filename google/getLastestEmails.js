@@ -105,13 +105,13 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                         // console.log('subject',subject.value);
                         // console.log('text',res.data.messages[0].snippet);
                        
-                        // gmail.users.messages.modify({
-                        //         userId:'me',
-                        //         id:messages[i].id,
-                        //         requestBody:{
-                        //             removeLabelIds:['UNREAD']
-                        //         }
-                        // })
+                        gmail.users.messages.modify({
+                                userId:'me',
+                                id:messages[i].id,
+                                requestBody:{
+                                    removeLabelIds:['UNREAD']
+                                }
+                        })
                     }
                     if(i === messages.length-1){
                         checkTheEmail()
