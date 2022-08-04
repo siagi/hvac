@@ -52,7 +52,6 @@ router.post('/test', async (req,res) =>{
             console.log(savedOrder);
             
         }
-        await mongoose.disconnect();
         
         // emailsAccounts.forEach((item)=>{
         //     sendGmailEmail(item)
