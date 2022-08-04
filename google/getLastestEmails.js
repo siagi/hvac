@@ -2,7 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const { sendGmailEmail } = require('./sendEmail');
-
+const nodemailer = require('nodemailer');
 const SCOPES = ['https://www.googleapis.com/auth/cloud-platform','https://mail.google.com/','https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/pubsub'];
 const TOKEN_PATH = 'token.json';
 
@@ -91,7 +91,7 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                             userId:'me',
                             id:messages[i].id
                         })
-                        body.then((b)=> {
+                        body.then(async (b)=> {
                             text = new Buffer.from(b.data.payload.parts[0].body.data, 'base64').toString('utf-8');
                             addEmail({
                                 from:from.value,
@@ -99,20 +99,46 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                                 text:text
                             })
                             // console.log('from',from)
-                            console.log('oAuth',auth);
+                            // console.log('AUTH',auth);
+                            // console.log('CLIENT ID', auth._clientId)
+                            // console.log('CLIENT SECRET', auth._clientSecret)
+                            const accessToken = await auth.getAccessToken();
+                            // console.log(accessToken.token)
+                            // const client_id = auth._client_id
+                            const transport = nodemailer.createTransport({
+                                service:'gmail',
+                                auth:{
+                                  type:'OAuth2',
+                                  user:'zamowserwis24@gmail.com',
+                                  clientId:auth._clientId,
+                                  clientSecret:auth._clientSecret,
+                                  refreshToken:auth.credentials.refresh_token,
+                                  accessToken:auth.credentials.access_token,
+                                },
+                              })
+                              console.log(transport)
+                              const mailOptions = {
+                                from:'ZamowSerwis24 <zamowserwis24@gmail.om>',
+                                to: from.value,
+                                subject:'New zamowserwis24',
+                                text:'Hello from gmail email using API',
+                                html: '<h1>Hello from gmail email using API</h1>'
+                              } 
+                              console.log(mailOptions)
+                              transport.sendMail(mailOptions)
                             // sendGmailEmail(from.value);
                         });
                         // console.log(res.data.messages[0].labelIds.includes('UNREAD'))
                         // console.log('subject',subject.value);
                         // console.log('text',res.data.messages[0].snippet);
                        
-                        // gmail.users.messages.modify({
-                        //         userId:'me',
-                        //         id:messages[i].id,
-                        //         requestBody:{
-                        //             removeLabelIds:['UNREAD']
-                        //         }
-                        // })
+                        gmail.users.messages.modify({
+                                userId:'me',
+                                id:messages[i].id,
+                                requestBody:{
+                                    removeLabelIds:['UNREAD']
+                                }
+                        })
                     }
                     if(i === messages.length-1){
                         checkTheEmail()
