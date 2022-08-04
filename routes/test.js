@@ -27,7 +27,7 @@ router.post('/test', async (req,res) =>{
         const emailsAccounts = []
         await mongoose.connect(process.env.MONGO_URL)
         .then(()=>console.log("DB connection Successfull"))
-        .catch((error)=>console.log(error));
+        .catch((error)=>console.log('MONGO ERROR',error));
         for(let i=0; i<emails.length; i++){
             console.log('here1');
             const {from, subject, text} = emails[i];
@@ -41,8 +41,6 @@ router.post('/test', async (req,res) =>{
                 customer = await newCustomer.save();
                 console.log(customer)
             }
-
-            console.log('TEXTT',text);
             const newOrder = new Order({
                 customer:customer._id,
                 description:text,

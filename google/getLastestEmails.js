@@ -127,18 +127,18 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                             //   console.log(mailOptions)
                             //   transport.sendMail(mailOptions)
                             // sendGmailEmail(from.value);
+                            gmail.users.messages.modify({
+                                    userId:'me',
+                                    id:messages[i].id,
+                                    requestBody:{
+                                        removeLabelIds:['UNREAD']
+                                    }
+                            })
                         });
                         // console.log(res.data.messages[0].labelIds.includes('UNREAD'))
                         // console.log('subject',subject.value);
                         // console.log('text',res.data.messages[0].snippet);
                        
-                        gmail.users.messages.modify({
-                                userId:'me',
-                                id:messages[i].id,
-                                requestBody:{
-                                    removeLabelIds:['UNREAD']
-                                }
-                        })
                     }
                     if(i === messages.length-1){
                         checkTheEmail()
