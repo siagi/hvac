@@ -52,9 +52,9 @@ router.post('/test', async (req,res) =>{
         }
         await mongoose.disconnect();
         console.log('here2',  emailsAccounts)
-        emailsAccounts.forEach((item)=>{
-            sendGmailEmail(item)
-        })
+        // emailsAccounts.forEach((item)=>{
+        //     sendGmailEmail(item)
+        // })
     }
     getLatestEmails(addEmail, checkTheEmail);
 
