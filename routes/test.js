@@ -66,7 +66,7 @@ router.post('/test', async (req,res) =>{
    
     // const o = await Order.findById('61e1aff70af1be59793b6715');
     // console.log('O',o);
-    // await mongoose.disconnect();
+    await mongoose.disconnect();
 
 
     res.status(200).json({mail:'confirmed'});
