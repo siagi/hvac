@@ -100,7 +100,6 @@ fs.readFile('./credentials.json', (err, content) => {
       } 
 
       const result = await transport.sendMail(mailOptions);
-      console.log('RESULT33',result)
     } catch (error) {
       console.log('error',error)
     }

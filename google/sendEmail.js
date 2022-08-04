@@ -95,8 +95,7 @@ async function sendGmailEmail(emailAddress) {
             html: '<h1>Hello from gmail email using API</h1>'
           } 
     
-          const result = await transport.sendMail(mailOptions);
-          console.log('RESULT33',result)
+          await transport.sendMail(mailOptions);
         } catch (error) {
           console.log('error',error)
         }
