@@ -1,6 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+const { sendGmailEmail } = require('./sendEmail');
 
 const SCOPES = ['https://www.googleapis.com/auth/cloud-platform','https://mail.google.com/','https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/pubsub'];
 const TOKEN_PATH = 'token.json';
@@ -65,11 +66,11 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
        */
       function listLabels(auth) {
         const gmail = google.gmail({version: 'v1', auth});
-        gmail.users.watch({
-          userId: 'me',
-          topicName: "projects/mc2serwis/topics/zamowserwis",
-          labelIds: ["INBOX"],
-        })
+        // gmail.users.watch({
+        //   userId: 'me',
+        //   topicName: "projects/mc2serwis/topics/zamowserwis",
+        //   labelIds: ["UNREAD"],
+        // })
         const result = gmail.users.threads.list({
           userId: 'me',
         }, (err, res) => {
@@ -84,17 +85,33 @@ const getLatestEmails = (addEmail, checkTheEmail) => {
                     if(err) console.log('err',err);
                     const from = res.data.messages[0].payload.headers.find((h)=>h['name']==='From')
                     const subject = res.data.messages[0].payload.headers.find((h)=>h['name']==='Subject');
-                    const text = res.data.snippet
+                    let text;
                     if(res.data.messages[0].labelIds.includes('UNREAD')){
+                        const body = gmail.users.messages.get({
+                            userId:'me',
+                            id:messages[i].id
+                        })
+                        body.then((b)=> {
+                            text = new Buffer.from(b.data.payload.parts[0].body.data, 'base64').toString('utf-8');
+                            addEmail({
+                                from:from.value,
+                                subject:subject.value,
+                                text:text
+                            })
+                            console.log('from',from)
+                            sendGmailEmail(from.value);
+                        });
                         // console.log(res.data.messages[0].labelIds.includes('UNREAD'))
                         // console.log('subject',subject.value);
                         // console.log('text',res.data.messages[0].snippet);
-                        addEmail({
-                            from:from.value,
-                            subject:subject.value,
-                            text:res.data.messages[0].snippet
-                        })
                        
+                        // gmail.users.messages.modify({
+                        //         userId:'me',
+                        //         id:messages[i].id,
+                        //         requestBody:{
+                        //             removeLabelIds:['UNREAD']
+                        //         }
+                        // })
                     }
                     if(i === messages.length-1){
                         checkTheEmail()

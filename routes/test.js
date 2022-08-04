@@ -23,6 +23,7 @@ router.post('/test', async (req,res) =>{
        console.log('adding...')
     }
     const checkTheEmail = async () => {
+        console.log(emails)
         const emailsAccounts = []
         await mongoose.connect(process.env.MONGO_URL)
         .then(()=>console.log("DB connection Successfull"))
@@ -41,6 +42,7 @@ router.post('/test', async (req,res) =>{
                 console.log(customer)
             }
 
+            console.log('TEXTT',text);
             const newOrder = new Order({
                 customer:customer._id,
                 description:text,
@@ -51,13 +53,13 @@ router.post('/test', async (req,res) =>{
             
         }
         await mongoose.disconnect();
-        console.log('here2',  emailsAccounts)
+        
         // emailsAccounts.forEach((item)=>{
         //     sendGmailEmail(item)
         // })
     }
     getLatestEmails(addEmail, checkTheEmail);
-
+    // console.log('???',getLatestEmails(addEmail, checkTheEmail))
     //     console.log(emails)
     // }, 5000)
     // console.log('DATA',req.data);
