@@ -33,7 +33,7 @@ router.get('/test', async (req,res) =>{
                 const newCustomer = new Customer({
                     email:from
                 })
-                const customer = await newCustomer.save();
+                customer = await newCustomer.save();
                 console.log(customer)
             }
 
