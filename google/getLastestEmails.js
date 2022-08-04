@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const SCOPES = ['https://www.googleapis.com/auth/cloud-platform','https://mail.google.com/','https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/pubsub'];
 const TOKEN_PATH = 'token.json';
 
-const getLatestEmails = (emails, checkTheEmail) => {
+const getLatestEmails = async (addEmail, checkTheEmail) => {
 
     fs.readFile('./credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
@@ -92,7 +92,7 @@ const getLatestEmails = (emails, checkTheEmail) => {
                         })
                         body.then(async (b)=> {
                             text = new Buffer.from(b.data.payload.parts[0].body.data, 'base64').toString('utf-8');
-                            emails.push({
+                            addEmail({
                                 from:from.value,
                                 subject:subject.value,
                                 text:text

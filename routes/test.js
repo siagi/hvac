@@ -17,11 +17,11 @@ WORKFLOW:
 */
 
 router.post('/test', async (req,res) =>{
-    // const addEmail = (item) => {
-        //    emails.push(item);
-        //    console.log('adding...')
-        // }
     const emails = []
+    const addEmail = (item) => {
+       emails.push(item);
+       console.log('adding...')
+    }
     const checkTheEmail = async () => {
         console.log(emails)
         const emailsAccounts = []
@@ -59,10 +59,11 @@ router.post('/test', async (req,res) =>{
         
         // emailsAccounts.forEach((item)=>{
         // })
-        res.status(200).json({mail:'confirmed'});
     }
-
-    getLatestEmails(emails, checkTheEmail);
+    getLatestEmails(addEmail, checkTheEmail).then((a)=>{
+        console.log('Finish')
+        res.status(200).json({mail:'confirmed'})
+    });
     // console.log('???',getLatestEmails(addEmail, checkTheEmail))
     //     console.log(emails)
     // }, 5000)
@@ -72,6 +73,7 @@ router.post('/test', async (req,res) =>{
    
     // const o = await Order.findById('61e1aff70af1be59793b6715');
     // console.log('O',o);
+
 
 
     // res.status(200).json({mail:'confirmed'});
