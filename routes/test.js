@@ -16,7 +16,7 @@ WORKFLOW:
 
 */
 
-router.get('/test', async (req,res) =>{
+router.post('/test', async (req,res) =>{
     const emails = []
     const addEmail = (item) => {
        emails.push(item);

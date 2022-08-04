@@ -108,46 +108,46 @@ fs.readFile('./credentials.json', (err, content) => {
 
   function listLabels({credentials,oAuth2Client}) {
     const gmail = google.gmail({version: 'v1', oAuth2Client});
-    // gmail.users.watch({
-    //   userId: 'me',
-    //   topicName: "projects/mc2serwis/topics/zamowserwis",
-    //   labelIds: ["INBOX"],
-    // })
+    gmail.users.watch({
+      userId: 'me',
+      topicName: "projects/mc2serwis/topics/zamowserwis",
+      labelIds: ["UNREAD"],
+    })
     // gmail.users.messages.send({
     //   userId:'me',
     //   requestBody:{
     //     raw:'aaaaaaaa'
     //   }
     // })
-    gmail.users.threads.list({
-      userId: '',
-    }, (err, res) => {
-        // console.log('RES',res.data)
-      if (err) return console.log('The API returned an error: ' + err);
-      const messages = res.data.threads;
-      if (messages.length) {
-        messages.forEach((item)=>{
-            gmail.users.threads.get({
-                userId:'me',
-                id:item.id
-            }, (err,res)=>{
-                // console.log('RES',res)
-                if(err) console.log('err',err);
-                const subject = res.data.messages[0].payload.headers.find((h)=>h['name']==='Subject');
-                const text = res.data.snippet
-                console.log(res.data.messages[0].labelIds.includes('UNREAD'))
-                console.log('subject',subject.value);
-                console.log('text',res.data.messages[0].snippet);
-            })
-        })
-        // console.log('Labels:');
-        // labels.forEach((label) => {
-        //   console.log(`- ${label.name}`);
-        // });
-      } else {
-        console.log('No labels found.');
-      }
-    });
+    // gmail.users.threads.list({
+    //   userId: '',
+    // }, (err, res) => {
+    //     // console.log('RES',res.data)
+    //   if (err) return console.log('The API returned an error: ' + err);
+    //   const messages = res.data.threads;
+    //   if (messages.length) {
+    //     messages.forEach((item)=>{
+    //         gmail.users.threads.get({
+    //             userId:'me',
+    //             id:item.id
+    //         }, (err,res)=>{
+    //             // console.log('RES',res)
+    //             if(err) console.log('err',err);
+    //             const subject = res.data.messages[0].payload.headers.find((h)=>h['name']==='Subject');
+    //             const text = res.data.snippet
+    //             console.log(res.data.messages[0].labelIds.includes('UNREAD'))
+    //             console.log('subject',subject.value);
+    //             console.log('text',res.data.messages[0].snippet);
+    //         })
+    //     })
+    //     // console.log('Labels:');
+    //     // labels.forEach((label) => {
+    //     //   console.log(`- ${label.name}`);
+    //     // });
+    //   } else {
+    //     console.log('No labels found.');
+    //   }
+    // });
   }
 
   async function getLastestMails(){
