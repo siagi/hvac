@@ -15,11 +15,6 @@ const testRoute = require('./routes/test')
 const app = express();
 dotenv.config()
 
-
-mongoose.connect(process.env.MONGO_URL)
-        .then(()=>console.log("DB connection Successfull"))
-        .catch((error)=>console.log(error));
-
 app.use(cors());
 app.use(fileupload());
 app.use(express.static("files"));

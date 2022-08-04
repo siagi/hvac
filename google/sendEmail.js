@@ -9,23 +9,21 @@ const TOKEN_PATH = 'token.json';
 fs.readFile('./credentials.json', (err, content) => {
     if (err) return console.log('Error loading client secret file:', err);
     // Authorize a client with credentials, then call the Gmail API.
-    authorize(JSON.parse(content), listLabels);
+    authorize(JSON.parse(content), sendEmail);
   });
 
 
-  function authorize(credentials, callback) {
-    console.log('CREDENTIAL',credentials);
+  function authorize(credentials, callback, emailAddress) {
     const {client_secret, client_id, redirect_uris} = credentials.web;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
   
     // Check if we have previously stored a token.
     fs.readFile(TOKEN_PATH, (err, token) => {
-      console.log('TOKEN PATH', token)
       if (err) return getNewToken(oAuth2Client, callback);
       oAuth2Client.setCredentials(JSON.parse(token));
       // sendEmail(credentials,oAuth2Client);
-      callback({credentials, oAuth2Client});
+      callback({credentials, oAuth2Client, emailAddress});
     });
   }
   
@@ -61,11 +59,11 @@ fs.readFile('./credentials.json', (err, content) => {
   }
 
 
-  async function sendGmailEmail() {
+  async function sendGmailEmail(emailAddress) {
     fs.readFile('./credentials.json', (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Gmail API.
-      authorize(JSON.parse(content), sendEmail);
+      authorize(JSON.parse(content), sendEmail, emailAddress);
     });
   }
   
@@ -75,12 +73,11 @@ fs.readFile('./credentials.json', (err, content) => {
    * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
    */
 
-  async function sendEmail({credentials,oAuth2Client}){
+  async function sendEmail({credentials,oAuth2Client, emailAddress}){
     // const gmail = google.gmail({version:'v1', auth});
     const {client_secret, client_id, redirect_uris} = credentials.web;
     try {
       const accessToken = await oAuth2Client.getAccessToken();
-      console.log('TOKEN',accessToken)
       const transport = nodemailer.createTransport({
         service:'gmail',
         auth:{
@@ -93,7 +90,7 @@ fs.readFile('./credentials.json', (err, content) => {
       })
       const mailOptions = {
         from:'ZamowSerwis24 <zamowserwis24@gmail.om>',
-        to: 'michal.maselko@gmail.com',
+        to: emailAddress,
         subject:'New zamowserwis24',
         text:'Hello from gmail email using API',
         html: '<h1>Hello from gmail email using API</h1>'
@@ -106,58 +103,8 @@ fs.readFile('./credentials.json', (err, content) => {
     }
   }
 
-  function listLabels({credentials,oAuth2Client}) {
-    const gmail = google.gmail({version: 'v1', oAuth2Client});
-    // gmail.users.watch({
-    //   userId: 'me',
-    //   topicName: "projects/mc2serwis/topics/zamowserwis",
-    //   labelIds: ["INBOX"],
-    // })
-    // gmail.users.messages.send({
-    //   userId:'me',
-    //   requestBody:{
-    //     raw:'aaaaaaaa'
-    //   }
-    // })
-    gmail.users.threads.list({
-      userId: '',
-    }, (err, res) => {
-        // console.log('RES',res.data)
-      if (err) return console.log('The API returned an error: ' + err);
-      const messages = res.data.threads;
-      if (messages.length) {
-        messages.forEach((item)=>{
-            gmail.users.threads.get({
-                userId:'me',
-                id:item.id
-            }, (err,res)=>{
-                // console.log('RES',res)
-                if(err) console.log('err',err);
-                const subject = res.data.messages[0].payload.headers.find((h)=>h['name']==='Subject');
-                const text = res.data.snippet
-                console.log(res.data.messages[0].labelIds.includes('UNREAD'))
-                console.log('subject',subject.value);
-                console.log('text',res.data.messages[0].snippet);
-            })
-        })
-        // console.log('Labels:');
-        // labels.forEach((label) => {
-        //   console.log(`- ${label.name}`);
-        // });
-      } else {
-        console.log('No labels found.');
-      }
-    });
-  }
 
-  async function getLastestMails(){
-    fs.readFile('./credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
-      // Authorize a client with credentials, then call the Gmail API.
-      authorize(JSON.parse(content), listLabels);
-    });
-  }
 
   // getLastestMails();
 
-  module.exports = {sendGmailEmail, getLastestMails}
+  module.exports = {sendGmailEmail}
