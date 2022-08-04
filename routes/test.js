@@ -36,7 +36,8 @@ router.post('/test', async (req,res) =>{
             let customer = await Customer.findOne({email:from});
             if(!customer){
                 const newCustomer = new Customer({
-                    email:from
+                    email:from,
+                    name:from,
                 })
                 customer = await newCustomer.save();
                 console.log(customer)
