@@ -107,6 +107,7 @@ router.post('/test', async (req,response) =>{
                                 id:messages[i].id
                             })
                             body.then(async (b)=> {
+                                console.log('B',b)
                                 text = new Buffer.from(b.data.payload.parts[0].body.data, 'base64').toString('utf-8');
                                 await mongoose.connect(process.env.MONGO_URL)
                                 .then(()=>console.log("DB connection Successfull"))
