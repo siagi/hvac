@@ -143,10 +143,10 @@ router.post('/test', async (req,response) => {
             };
             const mailSent = await transport.sendMail(mailOptions);
             if(mailSent.accepted){
-              await gmailClient.users.messages.delete({
-                userId:'me',
-                id:messages[i].id
-              })
+              // await gmailClient.users.messages.delete({
+              //   userId:'me',
+              //   id:messages[i].id
+              // })
               console.log('DONE OPERATION')
               await mongoose.disconnect();
               console.log(i),
