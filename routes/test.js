@@ -90,14 +90,13 @@ router.post('/test', async (req,response) => {
       userId: 'me',
     });
     const messages = threadsList.data.threads;
-    if(messages.length > 0){
+    if(messages && messages.length > 0){
       for(let i = 0; i < messages.length; i++){
         const threadDetails = await gmailClient.users.threads.get({
           userId:'me',
           id:messages[i].id
         })
         if(threadDetails.data.messages[0].labelIds.includes('UNREAD')){
-          console.log('Here in unread...')
             const fromEmailAddress = threadDetails.data.messages[0].payload.headers.find((h) => h['name'] === 'From').value;
             const subjectEmail = threadDetails.data.messages[0].payload.headers.find((h)=>h['name'] === 'Subject').value;
             const messageDetails = await gmailClient.users.messages.get({
@@ -153,14 +152,22 @@ router.post('/test', async (req,response) => {
               console.log(i),
               console.log(messages.length-1)
               if(i === messages.length - 1){
+                messages.forEach(msg => {
+                  gmailClient.users.messages.delete({
+                    userId:'me',
+                    id:msg.id
+                  })
+                })
                 response.status(200).json({operataion:'completed'});
               }
       
             }
         } else {
-          response.status(200).json({operataion:'there is no new emails'})
+          response.status(200).json({operataion:'there is no more emails'})
         }
       } 
+    } else {
+      response.status(200).json({operataion:'there is no new emails'})
     }
   } catch (error) {
     console.log(error);
