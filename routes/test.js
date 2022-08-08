@@ -179,9 +179,9 @@ router.post('/test', async (req,response) =>{
                         }
                     })
                     
-                    if(i === messages.length-1){
-                       response.status(200).json({mail:'confirm'})
-                    }
+                    // if(i === messages.length-1){
+                    //    response.status(200).json({mail:'confirm'})
+                    // }
                 }
                 // console.log('Labels:');
                 // labels.forEach((label) => {
@@ -194,6 +194,7 @@ router.post('/test', async (req,response) =>{
             });
         })
     })
+    response.status(200).json({mail:'confirm'})
     // console.log('oAuthClient')
 
     // const emails = []
