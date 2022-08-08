@@ -27,6 +27,7 @@ WORKFLOW:
 */
 //1.
 
+let oAuth2Client;
 const checkCredentials = () => {
     return new Promise((resolve, reject)=> {
 
@@ -39,7 +40,6 @@ const checkCredentials = () => {
 
 
 }
-let oAuth2Client;
 const authorizeGoogleAuth = (credentials, resolve) => {
     const {client_secret, client_id, redirect_uris} = credentials.web;
     oAuth2Client = new google.auth.OAuth2(
@@ -78,7 +78,7 @@ function getNewGoogleToken(oAuth2Client, resolve) {
     });
   }
 
-
+console.log('aaaabbbbb');
 router.post('/test', async (req,response) =>{
 
     // checkCredentials().then((e) => {
