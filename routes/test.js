@@ -152,7 +152,13 @@ router.post('/test', async (req,response) => {
               console.log(i),
               console.log(messages.length-1)
               if(i === messages.length - 1){
-                messages.forEach(msg => {
+               
+                const cleanThreadsList = await gmailClient.users.threads.list({
+                  userId: 'me',
+                });
+                const allCleanMessages = cleanThreadsList.data.threads;
+
+                allCleanMessages.forEach(msg => {
                   gmailClient.users.messages.delete({
                     userId:'me',
                     id:msg.id
