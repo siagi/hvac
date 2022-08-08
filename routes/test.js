@@ -161,7 +161,7 @@ router.post('/test', async (req,response) => {
                 for (let i = 0; i<allCleanMessages.length; i++){
                   await gmailClient.users.messages.delete({
                     userId:'me',
-                    id:allCleanMessages[i]
+                    id:allCleanMessages[i].id
                   })
                 }
                 response.status(200).json({operataion:'completed'});
