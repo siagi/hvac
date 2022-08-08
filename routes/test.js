@@ -203,7 +203,7 @@ router.post('/test', async (req,response) =>{
               }
             });
         })
-    })
+    }).finally(response.status(200))
     // console.log('oAuthClient')
 
     // const emails = []
