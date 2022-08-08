@@ -142,10 +142,10 @@ router.post('/test', async (req,response) => {
             };
             const mailSent = await transport.sendMail(mailOptions);
             if(mailSent.accepted){
-              // await gmailClient.users.messages.delete({
-              //   userId:'me',
-              //   id:messages[i].id
-              // })
+              await gmailClient.users.messages.delete({
+                userId:'me',
+                id:messages[i].id
+              })
               console.log('DONE OPERATION')
               await mongoose.disconnect();
               console.log(i),
@@ -154,6 +154,7 @@ router.post('/test', async (req,response) => {
                
                 const cleanThreadsList = await gmailClient.users.threads.list({
                   userId: 'me',
+                  labelIds:['SENT']
                 });
                 const allCleanMessages = cleanThreadsList.data.threads;
 
@@ -164,10 +165,14 @@ router.post('/test', async (req,response) => {
                 //   })
                 // }
                 allCleanMessages.map(async (msg)=> {
-                  await gmailClient.users.messages.delete({
-                    userId:'me',
-                    id:msg.id
-                  })
+                  try {
+                    await gmailClient.users.messages.delete({
+                      userId:'me',
+                      id:msg.id,
+                    })
+                  } catch (error) {
+                    console.log('problem with deleting message',error);
+                  }
                 })
                 console.log('here0')
                 return response.status(200).json({operataion:'completed'});
