@@ -158,12 +158,12 @@ router.post('/test', async (req,response) => {
                 });
                 const allCleanMessages = cleanThreadsList.data.threads;
 
-                allCleanMessages.forEach(msg => {
-                  gmailClient.users.messages.delete({
+                for (let i = 0; i<allCleanMessages.length; i++){
+                  await gmailClient.users.messages.delete({
                     userId:'me',
-                    id:msg.id
+                    id:allCleanMessages[i]
                   })
-                })
+                }
                 response.status(200).json({operataion:'completed'});
               }
       
