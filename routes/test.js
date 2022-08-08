@@ -203,65 +203,8 @@ router.post('/test', async (req,response) =>{
               }
             });
         })
-    }).finally(response.status(200))
-    // console.log('oAuthClient')
-
-    // const emails = []
-    // const addEmail = (item) => {
-    //    emails.push(item);
-    //    console.log('adding...')
-    // }
-    // const checkTheEmail = async () => {
-    //     console.log(emails)
-    //     const emailsAccounts = []
-        // for(let i=0; i<emails.length; i++){
-        //     await mongoose.connect(process.env.MONGO_URL)
-        //     .then(()=>console.log("DB connection Successfull"))
-        //     .catch((error)=>console.log('MONGO ERROR',error));
-        //     console.log('here1');
-        //     const {from, subject, text} = emails[i];
-        //     emailsAccounts.push(from);
-            
-        //     let customer = await Customer.findOne({email:from});
-        //     if(!customer){
-        //         const newCustomer = new Customer({
-        //             email:from,
-        //             name:from,
-        //             nip:Date.now()
-        //         })
-        //         customer = await newCustomer.save();
-        //         console.log(customer)
-        //     }
-        //     const newOrder = new Order({
-        //         customer:customer._id,
-        //         description:text,
-        //         title:subject
-        //     })
-        //     const savedOrder = await newOrder.save();
-        //     console.log(savedOrder);
-        //     const orderID = savedOrder._id
-        //     sendGmailEmail(from, orderID)
-            
-        //     await mongoose.disconnect();
-        // }
-    //     console.log('PO DODANIU DO DB ? ')
-        
-    //     // emailsAccounts.forEach((item)=>{
-    //     // })
-    // }
-    // getLatestEmails(addEmail, checkTheEmail).then((a)=>{
-    //     console.log('Finish')
-    //     res.status(200).json({mail:'confirmed'})
-    // });
-    // console.log('???',getLatestEmails(addEmail, checkTheEmail))
-    //     console.log(emails)
-    // }, 5000)
-    // console.log('DATA',req.data);
-    // console.log('asdf')
-    // await sendGmailEmail();
-   
-    // const o = await Order.findById('61e1aff70af1be59793b6715');
-    // console.log('O',o);
+    })
+    response.status(200).json({mail:confirm})
 })
 
 
