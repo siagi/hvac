@@ -170,22 +170,22 @@ router.post('/test', async (req,response) => {
                   })
                 })
                 console.log('here0')
-                response.status(200).json({operataion:'completed'});
+                return response.status(200).json({operataion:'completed'});
               }
       
             }
         } else {
           console.log('here1')
-          response.status(200).json({operataion:'there is no more emails'})
+          return response.status(200).json({operataion:'there is no more emails'})
         }
       } 
     } else {
       console.log('here2')
-      response.status(200).json({operataion:'there is no new emails'})
+      return response.status(200).json({operataion:'there is no new emails'})
     }
   } catch (error) {
     console.log(error);
-    response.status(500).json({error:error})
+    return response.status(500).json({error:error})
   }
 
 })
