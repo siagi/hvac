@@ -121,7 +121,6 @@ router.post('/test', async (req,response) => {
                 title:subjectEmail
             })
             const savedOrder = await newOrder.save();
-            console.log(savedOrder);
             const orderID = savedOrder._id
             const accessToken = await oAuth2Client.getAccessToken();
             const transport = nodemailer.createTransport({
@@ -158,21 +157,30 @@ router.post('/test', async (req,response) => {
                 });
                 const allCleanMessages = cleanThreadsList.data.threads;
 
-                for (let i = 0; i<allCleanMessages.length; i++){
+                // for await (const msg of allCleanMessages){
+                //   await gmailClient.users.messages.delete({
+                //     userId:'me',
+                //     id:msg.id
+                //   })
+                // }
+                allCleanMessages.map(async (msg)=> {
                   await gmailClient.users.messages.delete({
                     userId:'me',
-                    id:allCleanMessages[i].id
+                    id:msg.id
                   })
-                }
+                })
+                console.log('here0')
                 response.status(200).json({operataion:'completed'});
               }
       
             }
         } else {
+          console.log('here1')
           response.status(200).json({operataion:'there is no more emails'})
         }
       } 
     } else {
+      console.log('here2')
       response.status(200).json({operataion:'there is no new emails'})
     }
   } catch (error) {
