@@ -12,14 +12,24 @@ const OrderSchema = new mongoose.Schema(
                 serwis:{type:String, required:false}
             }
         },
-        customer:{type:mongoose.Types.ObjectId, required:false},
+        companyDetails:{type:mongoose.Types.ObjectId, required:false},
         devices:[
             {
-                _id:{type:mongoose.Types.ObjectId, required:false}
+                _id:{type:mongoose.Types.ObjectId, required:false},
+                brand:{type:String, required:false},
+                deviceType:{type:String, required:false},
+                serviceType:{type:String, required:false},
+                powerDevice:{type:String, required:false},
+                refrigerant:{type:String, required:false},
+                serialNumber:{type:String, required:false},
+                deviceFaults:[
+                    {type:String, required:false}
+                ]
             }
         ],
         description:{type:String, required:true},
-        title:{type:String, required:true}
+        title:{type:String, required:true},
+        serviceDate:{type:Date}
     },
     {timestamps:true}
 )

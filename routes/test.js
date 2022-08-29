@@ -11,6 +11,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 const { gmail } = require('googleapis/build/src/apis/gmail');
 const nodemailer = require('nodemailer');
+const {checkAvailableDate} = require('./order')
 // const {verifyToken} = require('../middleware/verifyToken')
 
 /*
@@ -41,6 +42,7 @@ const checkCredentials = async () => {
 
 }
 const authorizeGoogleAuth = (credentials, resolve) => {
+  console.log('here1');
     const {client_secret, client_id, redirect_uris} = credentials.web;
     oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
@@ -83,9 +85,15 @@ function getNewGoogleToken(oAuth2Client, resolve) {
 router.post('/test', async (req,response) => {
 
   try {
-    
+    const availableDays = await checkAvailableDate();
+    console.log('AVAILABLE DAYS',availableDays);
     const oAuth = await checkCredentials();
     const gmailClient = google.gmail({version: 'v1',auth:oAuth});
+    gmailClient.users.watch({
+      userId: 'me',
+      topicName: "projects/mc2serwis/topics/zamowserwis",
+      labelIds: ["UNREAD"],
+    })
     const threadsList = await gmailClient.users.threads.list({
       userId: 'me',
     });
@@ -138,7 +146,7 @@ router.post('/test', async (req,response) => {
                 to: fromEmailAddress,
                 subject: `Powierdzenie nowego zamówienia nr ${orderID}`,
                 text: `Dziękujemy za złożenie zamówienia na usługę serwisową. Nr złoszenia: ${orderID}`,
-                html: `<h3>Dziękujemy za złożenie zamówienia na usługę serwisową. Nr złoszenia: ${orderID}</h3>`
+                html: `<h3>Dziękujemy za złożenie zamówienia na usługę serwisową. Nr złoszenia: ${orderID}</h3> <a href="http://localhost:3000/form-details/?id=${orderID}&days[]=${availableDays[0]}&days[]=${availableDays[1]}&days[]=${availableDays[2]}&days[]=${availableDays[3]}&days[]=${availableDays[4]}&days[]=${availableDays[5]}&days[]=${availableDays[6]}&days[]=${availableDays[7]}&days[]=${availableDays[8]}&days[]=${availableDays[9]}&days[]=${availableDays[10]}&days[]=${availableDays[11]}">link text</a>`
             };
             const mailSent = await transport.sendMail(mailOptions);
             if(mailSent.accepted){

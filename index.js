@@ -11,6 +11,9 @@ const taskRoute = require('./routes/task')
 const noteRoute = require('./routes/note')
 const uploadRoute = require('./routes/upload')
 const testRoute = require('./routes/test')
+const updateOrder = require('./routes/updateOrder')
+// const orderRoute = require('./routes/order')
+
 
 const app = express();
 dotenv.config()
@@ -28,6 +31,8 @@ app.use("/api/task",taskRoute);
 app.use("/api/note",noteRoute)
 app.use("/api/upload",uploadRoute)
 app.use("/api/test",testRoute)
+app.use("/api/updateorder",updateOrder)
+// app.use("/api/order", orderRoute)
 
 app.listen(process.env.PORT || 5000,()=>{
     console.log("Backend server is running on 5000");
