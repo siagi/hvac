@@ -118,16 +118,22 @@ router.post('/test', async (req,response) => {
             if(!customer){
                 const newCustomer = new Customer({
                     email:fromEmailAddress,
-                    name:fromEmailAddress,
-                    nip:Date.now()
+                    name:'',
+                    nip:'',
+                    street:'',
+                    postcode:'',
+                    city:'',
+                    phone:0,
+                    discount:0
                 })
                 customer = await newCustomer.save();
             }
             const newOrder = new Order({
-                customer:customer._id,
+                companyDetails:customer._id,
                 description:messageText,
                 title:subjectEmail
             })
+            console.log(newOrder);
             const savedOrder = await newOrder.save();
             const orderID = savedOrder._id
             const accessToken = await oAuth2Client.getAccessToken();
