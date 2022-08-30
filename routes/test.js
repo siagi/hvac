@@ -129,9 +129,11 @@ router.post('/test', async (req,response) => {
                 customer = await newCustomer.save();
             }
             const newOrder = new Order({
-                companyDetails:customer._id,
-                description:messageText,
-                title:subjectEmail
+              companyDetails:customer._id,
+              devices:[],
+              description:messageText,
+              title:subjectEmail,
+              serviceDate:null
             })
             console.log(newOrder);
             const savedOrder = await newOrder.save();
