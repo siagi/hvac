@@ -133,7 +133,8 @@ router.post('/test', async (req,response) => {
               devices:[],
               description:messageText,
               title:subjectEmail,
-              serviceDate:null
+              serviceDate:null,
+              status:'new'
             })
             console.log(newOrder);
             const savedOrder = await newOrder.save();

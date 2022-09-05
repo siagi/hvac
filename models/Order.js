@@ -29,7 +29,8 @@ const OrderSchema = new mongoose.Schema(
         ],
         description:{type:String, required:true},
         title:{type:String, required:true},
-        serviceDate:{type:Date}
+        serviceDate:{type:Date},
+        status:{type:String, required:false}
     },
     {timestamps:true}
 )
