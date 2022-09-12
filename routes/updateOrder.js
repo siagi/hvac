@@ -9,17 +9,16 @@ const Customer = require('../models/Customer');
 router.post('/update', async (req,res) =>{
     await mongoose.connect(process.env.MONGO_URL);
     // console.log('DATA',req.data);
+    console.log('Body', req.body)
     console.log('BOODYY', req.body.devices);
     const id = req.body.orderId;
     const companydet = req.body.companyDetails;
     const someDate = req.body.serviceDate;
     const createDate = new Date(someDate.date);
-    // createDate.setHours(someDate.hour,0,0,0)
-    // createDate.setHours(someDate.hour)
-    console.log('CREATE DATE',createDate);
     let order = await Order.findById(id).updateOne({
         devices:req.body.devices,
         serviceDate:createDate,
+        status:'confirmed'
 
     });
     const findCustomer = await Customer.findById(order.companyDetails).updateOne({
@@ -30,8 +29,6 @@ router.post('/update', async (req,res) =>{
         city: companydet.city,
         phone:companydet.phone
     });
-    
-    console.log('Customer',findCustomer);
 
     mongoose.disconnect();
     
