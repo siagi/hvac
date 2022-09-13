@@ -12,6 +12,8 @@ const {google} = require('googleapis');
 const { gmail } = require('googleapis/build/src/apis/gmail');
 const nodemailer = require('nodemailer');
 const {checkAvailableDate} = require('./order')
+const {getOrderByMonth} = require('./order');
+const { response } = require('express');
 // const {verifyToken} = require('../middleware/verifyToken')
 
 /*
@@ -209,6 +211,18 @@ router.post('/test', async (req,response) => {
     console.log(error);
     return response.status(500).json({error:error})
   }
+
+})
+
+router.get('/orderbymonth', async(req,res)=>{
+  console.log('asdf2');
+  const orders = await getOrderByMonth();
+  if(orders) {
+    console.log('asdf3');
+    console.log(orders)
+    return res.status(200).json({orders});
+  }
+  // return response.status(404).json({orders:'not found any orders in this month'});
 
 })
 

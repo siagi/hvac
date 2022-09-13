@@ -44,6 +44,15 @@ const checkAvailableDate = async () => {
 
 }
 
+const getOrderByMonth = async() => {
+    await mongoose.connect(process.env.MONGO_URL);
+    // const orders = await Order.find({'$where' : function() { return this.serviceDate.getMonth() == 9 }})
+    const orders = await Order.where('serviceDate').gte(new Date('2022-09-01')).lte(new Date('2022-10-01'));
+    console.log('Orders 09:',orders)
+    await mongoose.disconnect();
+    return orders;
+}
+
 // router.get('/availableOrderDate',async(req,res)=>{
 //     try {
 //         const GMT = 0
@@ -98,4 +107,4 @@ const checkAvailableDate = async () => {
 //     }
 // })
 
-module.exports = {checkAvailableDate}
+module.exports = {checkAvailableDate, getOrderByMonth}
